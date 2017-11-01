@@ -13,6 +13,7 @@ import android.widget.EditText;
  */
 
 public class WordFragment extends Fragment {
+    private static final String ARG_WORD_ID = "word_id";
 
     private EditText mEditContent;
     private EditText mEditProperty;
@@ -22,7 +23,7 @@ public class WordFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int word_id = getActivity().getIntent().getIntExtra(WordActivity.EXTRA_WORD_ID, 0);
+        int word_id = getArguments().getInt(ARG_WORD_ID);
         mWord = WordLab.get(getActivity()).getWord(word_id);
     }
 
@@ -38,6 +39,15 @@ public class WordFragment extends Fragment {
         mEditProperty.setText(mWord.getProperty());
         mEditMeaning.setText(mWord.getMeaning());
         return view;
+    }
+
+    public static Fragment newInstance(int id) {
+        WordFragment fragment = new WordFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_WORD_ID, id);
+        fragment.setArguments(args);
+        return fragment;
+
     }
 
 }
